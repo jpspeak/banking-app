@@ -23,15 +23,15 @@ function new_user(user, balance){
 
     if( user_account[0].name == user){  
    
-        console.log("the user your enter it's already registered " + user.toUpperCase());    
+        console.log("the user your enter it's already registered " + user);    
    
     }else if(user_account[1].name == user){
 
-        console.log("the user your enter it's already registered " + user.toUpperCase());
+        console.log("the user your enter it's already registered " + user);
 
-    }else if(user_arr.name === user){
+    }else if(user_arr.name == user){
 
-        console.log("the user your enter it's already registered " + user.toUpperCase());
+        console.log("the user your enter it's already registered " + user);
 
     }else{
 
