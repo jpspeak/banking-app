@@ -62,7 +62,7 @@ function deposite(user, amount){
       
             // console.log("Your new balance is " + total)
       
-            return "Your new balance is " + total
+            return total;
         }
     }
 
@@ -85,7 +85,7 @@ function withdraw(user, amount){
        
             // console.log("Your new balance is " + total)
 
-            return "Your new balance is " + total;
+            return total;
        
         }
     }
