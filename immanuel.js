@@ -1,4 +1,4 @@
-var user_account = [
+let user_account = [
     {
         name: "JAY",
         balance: 0,
