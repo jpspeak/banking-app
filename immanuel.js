@@ -13,14 +13,26 @@ function new_user(user, balance){
 
     let obj = {name:user, balance:balance}; 
 
-    user_account.push(obj);
-
-    console.log("new user")
-
     for (i = 0; i < user_account.length ; i++){
+   
+        var arruser  = user_account[i];
+   
+    }
+
+
+    if( arruser.name == user.toUpperCase() || arruser.name == user ){
+      
+   
+        console.log("the user your enter it's already registered " + user.toUpperCase());
         
-        var arr = user_account[i];
-  
+   
+    }
+     else{
+   
+        user_account.push(obj.toUpperCase());
+    
+        console.log("Successfully added new user " + user);
+   
     }
 
 }
