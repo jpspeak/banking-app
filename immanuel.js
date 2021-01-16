@@ -90,7 +90,7 @@ function withdraw(user, amount){
        
         }else if(user_account[i].balance == 0) {
             
-            return "invalid you have 0.00 PEsos balance"
+            return "invalid you have 0.00 Pesos balance in your Account"
 
         }
     }
