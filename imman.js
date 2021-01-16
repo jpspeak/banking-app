@@ -7,7 +7,7 @@ let user_account = [
         name: "Imman",
         balance: 100,
     },
-];
+]
 
 function new_user(user, balance){
 
