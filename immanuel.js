@@ -1,4 +1,5 @@
 let user_account = [
+
     {
         name: "JAY",
         balance: 0,
@@ -24,15 +25,16 @@ function new_user(user, balance){
     if( user_account[0].name == user){  
    
         // console.log("the user your enter it's already registered " + user);
-        return "the user your enter it's already registered ";    
+        document.getElementById("msg").innerHTML = "<b><p style = 'color:red'>THE USER YOU ENTER IS ALREADY REGISTERED </p><b>";    
    
     }else if(user_account[1].name == user){
 
-        return "the user your enter it's already registered ";
+        // return "<b><p style = 'color:red'>THE USER YOU ENTER IS ALREADY REGISTERED </p><b>";
+        document.getElementById("msg").innerHTML = "<b><p style = 'color:red'>THE USER YOU ENTER IS ALREADY REGISTERED </p><b>"; 
 
     }else if(user_arr.name == user){
 
-        return "the user your enter it's already registered ";
+        document.getElementById("msg").innerHTML = "<b><p style = 'color:red'>THE USER YOU ENTER IS ALREADY REGISTERED </p><b>"; 
 
     }else{
 
@@ -40,7 +42,7 @@ function new_user(user, balance){
     
         // console.log("Successfully added new user " + user);
 
-        return "Successfully added new user " + user;
+         document.getElementById("msg").innerHTML = "USERNAME: " + user.toUpperCase() + "<br />" + "BALANCE: "+ balance + ".00 PESOS<br />"+"<p>SUCCESSFULLY CREATED</p>"
    
         }
 
@@ -69,7 +71,7 @@ function deposite(user, amount){
 
 }
 
-function withdraw(user, amount){
+function DOMcreateuser(user, amount){
     
     var user = user.toUpperCase();
 
@@ -96,3 +98,50 @@ function withdraw(user, amount){
     }
 }
 
+function DOMcreateuser(){
+   
+    const saving = document.getElementById("inpsaving");
+
+    const fname = document.getElementById("inpuser");
+
+    const submit = document.getElementById("submit");
+
+    submitOK = "true";
+    
+    submit.onclick = function(){
+
+        const Username =  fname.value;
+
+        const Usersaving =  saving.value;
+
+
+        if (Username.length > 25) {
+            
+            alert("The name may have no more than 25 characters");
+        
+            submitOK = "false";
+
+        
+        }else if (isNaN(Usersaving) || Usersaving < 1 || Usersaving > 500000) {
+
+            alert("The saving must be a number maximum of 500,000 only");
+
+            submitOK = "false";
+
+        }else {
+        
+            new_user(Username, Usersaving)
+            
+            submitOK = "true";
+
+        }
+
+        if (submitOK == "false") {
+
+            return false;
+
+        }
+
+    }        
+}
+DOMcreateuser();
