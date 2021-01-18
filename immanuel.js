@@ -71,7 +71,7 @@ function deposite(user, amount){
 
 }
 
-function DOMcreateuser(user, amount){
+function withdraw(user, amount){
     
     var user = user.toUpperCase();
 
