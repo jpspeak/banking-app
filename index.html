@@ -4,7 +4,127 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Banking App</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        min-height: 100vh;
+        font-family: "Roboto", sans-serif;
+      }
+      .card {
+        max-width: 900px;
+      }
+      th,
+      tbody th,
+      tbody td {
+        cursor: pointer;
+      }
+      .card {
+        width: 100%;
+        max-width: 900px;
+      }
+    </style>
   </head>
   <body>
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-light justify-content-between"
+    >
+      <div class="container">
+        <a class="navbar-brand" href="/">Brand</a>
+      </div>
+    </nav>
+    <div
+      class="container d-flex justify-content-center align-items-center flex-column mb-5"
+    >
+      <h2 class="text-center m-5">List of Bank Accounts</h2>
+      <div class="card shadow border-0">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-6"><strong>Accounts</strong></div>
+            <div class="col-md-6">
+              <a href="#" class="btn btn-success text-white float-right">
+                <i class="fas fa-user-plus mr-2"></i>Create account
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body p-3">
+          <div class="form-group row">
+            <div class="offset-md-9 col-md-3">
+              <input
+                type="text"
+                id="search"
+                class="form-control"
+                placeholder="Search"
+              />
+            </div>
+          </div>
+          <table
+            class="table table-bordered table-hover shadow-sm m-0 shadow-none"
+          >
+            <thead>
+              <tr>
+                <th class="w-50">Name</th>
+                <th class="w-50">Balance</th>
+              </tr>
+            </thead>
+            <tbody id="table_body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </body>
+
+  <script type="module">
+    import { list_users, search } from "./backend.js";
+
+    const table_body_element = document.getElementById("table_body");
+    const search_element = document.getElementById("search");
+
+    search_element.addEventListener("input", search_name);
+
+    let user_accounts = list_users();
+
+    function display_user_accounts() {
+      table_body_element.innerHTML = "";
+      if (user_accounts?.length) {
+        user_accounts = user_accounts.map((user_account) => {
+          return `
+            
+                <tr onclick="window.location.replace('/account.html?name=${user_account.name}')">
+                    <td>${user_account.name}</td>
+                    <td>${user_account.balance}</td>
+                </tr>
+            
+            `;
+        });
+        user_accounts.forEach((user_account) => {
+          table_body_element.innerHTML += user_account;
+        });
+      } else {
+        table_body_element.innerHTML += `<tr><td colspan='3' class='text-center'>NO DATA<tr>`;
+      }
+    }
+
+    function search_name() {
+      const key = search_element.value.toUpperCase();
+      user_accounts = search(key);
+      display_user_accounts();
+    }
+
+    display_user_accounts();
+  </script>
 </html>
