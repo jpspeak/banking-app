@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banking App</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+    <style>
+      body {
+        min-height: 100vh;
+        font-family: "Roboto", sans-serif;
+      }
+      .card {
+        max-width: 900px;
+      }
+      .nav-link {
+        cursor: pointer;
+      }
+      .form-group {
+        width: 100%;
+      }
+      .rotate-90 {
+        transform: rotate(90deg);
+      }
+      .rotate-neg90 {
+        transform: rotate(-90deg);
+      }
+    </style>
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-light justify-content-between"
+    >
+      <div class="container">
+        <a class="btn" href="/"><i class="fas fa-arrow-left"></i></a>
+      </div>
+    </nav>
+    <div
+      class="container d-flex justify-content-center align-items-center flex-column mb-5"
+    >
+      <h2 class="text-center m-5">User Bank Account</h2>
+      <div class="card w-100 shadow border-0">
+        <div class="card-body">
+          <div class="row rounded">
+            <div class="col-md-6">
+              <strong class="text-secondary">Account Name:</strong><br />
+              <h4 id="name_display">---</h4>
+            </div>
+            <div class="col-md-6">
+              <strong class="text-secondary">Balance:</strong><br />
+              <h4 id="balance_display">---</h4>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <ul class="nav nav-tabs" id="myTab">
+              <li class="nav-item">
+                <a class="nav-link active" data-tab="deposit">Deposit</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-tab="withdraw">Withdraw</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-tab="send">Send Money</a>
+              </li>
+            </ul>
+            <div
+              class="tab-content border-left border-bottom border-right px-3 py-5"
+              id="myTabContent"
+            >
+              <div class="tab-pane fade show active" data-tab="deposit">
+                <div class="h-100">
+                  <div class="row">
+                    <div class="col-md-6 d-flex align-items-center">
+                      <div class="form-group">
+                        <label for="deposit_amount"
+                          ><strong>Amount</strong>
+                        </label>
+                        <input
+                          type="number"
+                          id="deposit_amount"
+                          class="form-control"
+                          placeholder="Enter amount"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center">
+                      <button class="btn btn-dark w-100 mt-3">
+                        <i class="fas fa-sign-in-alt mr-2 rotate-90"></i>
+                        Deposit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" data-tab="withdraw">
+                <div class="h-100">
+                  <div class="row">
+                    <div class="col-md-6 d-flex align-items-center">
+                      <div class="form-group">
+                        <label for="withdraw_amount"
+                          ><strong>Amount</strong>
+                        </label>
+                        <input
+                          type="number"
+                          id="withdraw_amount"
+                          class="form-control"
+                          placeholder="Enter amount"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center">
+                      <button class="btn btn-dark w-100 mt-3">
+                        <i class="fas fa-sign-out-alt mr-2 rotate-neg90"></i>
+                        Withdraw
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" data-tab="send">
+                <div class="h-100">
+                  <div class="row">
+                    <div class="col-md-4 d-flex align-items-center">
+                      <div class="form-group">
+                        <label for="withdraw_amount"
+                          ><strong>Amount</strong>
+                        </label>
+                        <input
+                          type="number"
+                          id="send_amount"
+                          class="form-control"
+                          placeholder="Enter amount"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-center">
+                      <div class="form-group">
+                        <label for="deposit_amount"
+                          ><strong>Recepient</strong>
+                        </label>
+                        <select class="form-control w-100" id="recepient">
+                          <option value="" disabled selected hidden>
+                            Select recepient
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-center">
+                      <button class="btn btn-dark w-100 mt-3" id="send">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Send
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script type="module">
+      import { show, send, list_users } from "./backend.js";
+
+      const nav_link_element = document.querySelectorAll(".nav-link");
+      const tab_pane_element = document.querySelectorAll(".tab-pane");
+      const name_display_element = document.getElementById("name_display");
+      const balance_display_element = document.getElementById(
+        "balance_display"
+      );
+      const send_amount_element = document.getElementById("send_amount");
+      const recepient_element = document.getElementById("recepient");
+
+      const url = new URL(location);
+      const params = new URLSearchParams(url.search.slice(1));
+      const name = params.get("name");
+
+      //click listener for tabs
+      for (const nav_link of nav_link_element) {
+        nav_link.addEventListener("click", (e) => {
+          for (const nav_link of nav_link_element) {
+            nav_link.classList.remove("active");
+          }
+          for (const tab_pane of tab_pane_element) {
+            if (tab_pane.dataset.tab === e.target.dataset.tab) {
+              tab_pane.classList.add("active");
+              tab_pane.classList.add("show");
+            } else {
+              tab_pane.classList.remove("active");
+              tab_pane.classList.remove("show");
+            }
+          }
+          nav_link.classList.add("active");
+        });
+      }
+      //clisk listener for send
+      document.getElementById("send").addEventListener("click", send_money);
+
+      function display_user_account() {
+        const user_account = show(name);
+        if (user_account) {
+          name_display_element.innerHTML = user_account.name;
+          balance_display_element.innerHTML = user_account.balance;
+        }
+      }
+
+      function show_select_option_names() {
+        let user_accounts = list_users();
+        user_accounts = user_accounts.filter((user_account) => {
+          return !(user_account.name === name);
+        });
+        const user_account_name_option = user_accounts.map((user_account) => {
+          user_account.name !== name;
+          return `
+            <option value='${user_account.name}'>${user_account.name}</option>
+          `;
+        });
+        user_account_name_option.forEach((element) => {
+          recepient_element.innerHTML += element;
+        });
+      }
+
+      function clear_inputs() {
+        (send_amount_element.value = ""), (recepient_element.value = "");
+      }
+
+      function send_money() {
+        const { success, message, data } = send(
+          name,
+          recepient_element.value,
+          parseInt(send_amount_element.value)
+        );
+        if (success) {
+          Swal.fire({
+            title: message,
+            html: `
+            <div class="row pb-1 pt-4">
+                <div class="col-md-6 d-flex"><strong>${data.from.name}</strong></div>
+                <div class="col-md-6"><strong><span class='text-secondary'>Balance:</span> ${data.from.balance}</strong></div>
+            </div><hr/>
+            <div class="row py-1">
+                <div class="col-md-6 d-flex"><strong>${data.to.name}</strong></div>
+                <div class="col-md-6"><strong><span class='text-secondary'>Balance:</span> ${data.to.balance}</strong></div>
+            </div>
+            
+            `,
+            icon: "success",
+          });
+        } else {
+          Swal.fire({
+            title: message,
+            icon: "error",
+          });
+        }
+        display_user_account();
+        clear_inputs();
+      }
+
+      display_user_account();
+      show_select_option_names();
+    </script>
+  </body>
+</html>
