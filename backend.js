@@ -107,10 +107,12 @@ export function show(name) {
   let user_account = user_accounts.find((user_account) => {
     return user_account.name === name;
   });
-  user_account = {
-    ...user_account,
-    balance: format_balance(user_account.balance),
-  };
+  if (user_account) {
+    user_account = {
+      ...user_account,
+      balance: format_balance(user_account.balance),
+    };
+  }
   return user_account;
 }
 
