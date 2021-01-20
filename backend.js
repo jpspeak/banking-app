@@ -15,7 +15,7 @@ export function format_balance(num) {
 export function send(from_user, to_user, amount) {
   from_user = from_user?.toUpperCase();
   to_user = to_user?.toUpperCase();
-  amount = parseInt(amount);
+  amount = parseFloat(amount);
 
   if (!amount || amount < 0) return new Response(false, "Invalid amount");
 
