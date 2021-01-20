@@ -1,14 +1,4 @@
-let user_account = [
-
-    {
-        name: "JAY",
-        balance: 0,
-    },
-    {
-        name: "IMMAN",
-        balance: 100,
-    },
-]
+var user_account = JSON.parse(localStorage.getItem('user_accounts'));
 
 function new_user(user, balance){
 
@@ -37,8 +27,11 @@ function new_user(user, balance){
         document.getElementById("msg").innerHTML = "<b><p style = 'color:red'>THE USER YOU ENTER IS ALREADY REGISTERED </p><b>"; 
 
     }else{
-
+        // add to it,
         user_account.push(obj);
+        // then put it back.
+        localStorage.setItem('user_accounts', JSON.stringify(user_account));
+
     
         // console.log("Successfully added new user " + user);
 
