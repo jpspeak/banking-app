@@ -116,4 +116,66 @@ export function show(name) {
   return user_account;
 }
 
+export function create_user(user, balance = 0) {
+  user = user.toUpperCase();
+  balance = parseFloat(balance);
+  if (isNaN(balance) || balance < 0)
+    return new Response(false, "Invalid amount");
+
+  const user_accounts = getLocalStorageItemAsOject("user_accounts");
+
+  const user_account = user_accounts.find((user_account) => {
+    return user_account.name === user;
+  });
+  if (user_account) return new Response(false, "Account name is already taken");
+
+  if (user_accounts) {
+    const new_user = { name: user, balance: balance };
+    user_accounts.push(new_user);
+    localStorage.setItem("user_accounts", JSON.stringify(user_accounts));
+    return new Response(true, "Account successfully created");
+  }
+}
+
+export function deposit(user, amount) {
+  user = user.toUpperCase();
+  amount = parseFloat(amount);
+
+  if (!amount || amount < 0) return new Response(false, "Invalid amount");
+
+  let user_accounts = getLocalStorageItemAsOject("user_accounts");
+  const user_index = user_accounts.findIndex((user_account) => {
+    return user_account.name === user;
+  });
+
+  if (user_index === -1) return new Response(false, "Account not found");
+
+  user_accounts[user_index].balance += amount;
+
+  localStorage.setItem("user_accounts", JSON.stringify(user_accounts));
+
+  return new Response(true, "Transaction successful");
+}
+export function withdraw(user, amount) {
+  user = user.toUpperCase();
+  amount = parseFloat(amount);
+
+  if (!amount || amount < 0) return new Response(false, "Invalid amount");
+
+  let user_accounts = getLocalStorageItemAsOject("user_accounts");
+  const user_index = user_accounts.findIndex((user_account) => {
+    return user_account.name === user;
+  });
+
+  if (user_index === -1) return new Response(false, "Account not found");
+  if (user_accounts[user_index].balance < amount)
+    return new Response(false, "Not enough balance");
+
+  user_accounts[user_index].balance -= amount;
+
+  localStorage.setItem("user_accounts", JSON.stringify(user_accounts));
+
+  return new Response(true, "Transaction successful");
+}
+
 //---------Your code here------------>
