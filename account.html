@@ -240,7 +240,7 @@
         const { success, message, data } = send(
           name,
           recepient_element.value,
-          parseInt(send_amount_element.value)
+          send_amount_element.value
         );
         if (success) {
           Swal.fire({
