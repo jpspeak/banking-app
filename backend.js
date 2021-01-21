@@ -76,9 +76,13 @@ function get_balance(user) {
 export function list_users() {
   let user_accounts = getLocalStorageItemAsOject("user_accounts");
   user_accounts = user_accounts.map((user_account) => {
-    return { ...user_account, balance: format_balance(user_account.balance) };
+    return {
+      ...user_account,
+      balance: user_account.balance,
+      formatted_balance: format_balance(user_account.balance),
+    };
   });
-  return user_accounts;
+  return user_accounts.reverse();
 }
 //return array of user objects
 function getLocalStorageItemAsOject(key) {
@@ -94,7 +98,10 @@ export function search(key) {
     return user_account.name.includes(key);
   });
   user_accounts = user_accounts.map((user_account) => {
-    return { ...user_account, balance: format_balance(user_account.balance) };
+    return {
+      ...user_account,
+      formatted_balance: format_balance(user_account.balance),
+    };
   });
   return user_accounts;
 }
@@ -116,13 +123,16 @@ export function show(name) {
   return user_account;
 }
 
-export function create_user(user, balance = 0) {
+export function create_user(user, balance) {
   user = user.toUpperCase();
-  balance = parseFloat(balance);
+  balance = balance === "" ? 0 : parseFloat(balance);
+  if (user === "") return new Response(false, "Full Name is required");
   if (isNaN(balance) || balance < 0)
     return new Response(false, "Invalid amount");
 
   const user_accounts = getLocalStorageItemAsOject("user_accounts");
+  const last_element = user_accounts.length - 1;
+  const lastId = user_accounts[last_element]?.id || 0;
 
   const user_account = user_accounts.find((user_account) => {
     return user_account.name === user;
@@ -130,11 +140,31 @@ export function create_user(user, balance = 0) {
   if (user_account) return new Response(false, "Account name is already taken");
 
   if (user_accounts) {
-    const new_user = { name: user, balance: balance };
+    const new_user = { id: lastId + 1, name: user, balance: balance };
     user_accounts.push(new_user);
     localStorage.setItem("user_accounts", JSON.stringify(user_accounts));
     return new Response(true, "Account successfully created");
   }
+}
+export function edit_user(id, user, balance) {
+  user = user.toUpperCase();
+  id = parseFloat(id);
+  balance = balance === "" ? 0 : parseFloat(balance);
+  if (user === "") return new Response(false, "Full Name is required");
+  if (isNaN(balance) || balance < 0)
+    return new Response(false, "Invalid amount");
+
+  const user_accounts = getLocalStorageItemAsOject("user_accounts");
+
+  const user_index = user_accounts.findIndex((user_account) => {
+    return user_account.id === id;
+  });
+  if (user_index === -1) return new Response(false, "Account not found");
+
+  user_accounts[user_index].name = user;
+  user_accounts[user_index].balance = balance;
+  localStorage.setItem("user_accounts", JSON.stringify(user_accounts));
+  return new Response(true, "Account successfully updated");
 }
 
 export function deposit(user, amount) {
@@ -154,7 +184,10 @@ export function deposit(user, amount) {
 
   localStorage.setItem("user_accounts", JSON.stringify(user_accounts));
 
-  return new Response(true, "Transaction successful");
+  return new Response(true, "Transaction successful", {
+    ...user_accounts[user_index],
+    balance: format_balance(user_accounts[user_index].balance),
+  });
 }
 export function withdraw(user, amount) {
   user = user.toUpperCase();
@@ -175,7 +208,21 @@ export function withdraw(user, amount) {
 
   localStorage.setItem("user_accounts", JSON.stringify(user_accounts));
 
-  return new Response(true, "Transaction successful");
+  return new Response(true, "Transaction successful", {
+    ...user_accounts[user_index],
+    balance: format_balance(user_accounts[user_index].balance),
+  });
+}
+export function delete_user(id) {
+  id = parseInt(id);
+  const user_accounts = getLocalStorageItemAsOject("user_accounts");
+  const user_index = user_accounts.findIndex((user_account) => {
+    return user_account.id === id;
+  });
+  if (user_index === -1) return new Response(false, "Account not found");
+  user_accounts.splice(user_index, 1);
+  localStorage.setItem("user_accounts", JSON.stringify(user_accounts));
+  return new Response(true, "Account successfully deleted");
 }
 
 //---------Your code here------------>

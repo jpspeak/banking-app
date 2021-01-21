@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banking App</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        min-height: 100vh;
+        font-family: "Montserrat", sans-serif;
+        background-color: #e3f2fd;
+      }
+      .card {
+        max-width: 400px;
+        min-width: 400px;
+      }
+      .card-header {
+        background: linear-gradient(90deg, #3c72ff 0%, #37cfff 100%);
+        color: white;
+      }
+      .nav-link {
+        cursor: pointer;
+      }
+      .form-group {
+        width: 100%;
+      }
+      .rotate-90 {
+        transform: rotate(90deg);
+      }
+      .rotate-neg90 {
+        transform: rotate(-90deg);
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg justify-content-between">
+      <div class="container">
+        <a class="btn rounded-circle btn-outline-primary" href="/"
+          ><i class="fas fa-arrow-left"></i
+        ></a>
+      </div>
+    </nav>
+    <div
+      class="container d-flex justify-content-center align-items-center flex-column mb-5"
+    >
+      <div class="card shadow mt-5 border-0 rounded-lg">
+        <div class="card-header">
+          <h4 class="text-center m-0">Edit Account</h4>
+        </div>
+        <div class="card-body py-4">
+          <form onsubmit="return false">
+            <div class="form-group">
+              <label for="full_name">Full Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="full_name"
+                placeholder="Enter full name"
+              />
+              <!-- <small id="emailHelp" class="form-text text-muted"
+                >We'll never share your email with anyone else.</small
+              > -->
+            </div>
+            <div class="form-group">
+              <label for="balance">Balance</label>
+              <input
+                type="number"
+                class="form-control"
+                id="balance"
+                placeholder="Enter balance (Optional)"
+                value=""
+              />
+            </div>
+
+            <button
+              type="submit"
+              id="create_btn"
+              class="btn btn-primary float-right"
+            >
+              Update
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script type="module">
+      import { edit_user } from "./backend.js";
+
+      const full_name_element = document.getElementById("full_name");
+      const balance_element = document.getElementById("balance");
+
+      const url = new URL(location);
+      const params = new URLSearchParams(url.search.slice(1));
+      const id = params.get("id");
+      const name = params.get("name");
+      const balance = params.get("balance");
+
+      document
+        .getElementById("create_btn")
+        .addEventListener("click", edit_user_account);
+
+      function edit_user_account() {
+        const { success, message, data } = edit_user(
+          id,
+          full_name_element.value,
+          balance_element.value
+        );
+        if (success) {
+          Swal.fire({
+            title: message,
+            icon: "success",
+          });
+          window.location.replace("/");
+          sessionStorage.setItem("success", message);
+        } else {
+          Swal.fire({
+            title: message,
+            icon: "error",
+          });
+        }
+      }
+
+      function setInputValue() {
+        full_name_element.value = name;
+        balance_element.value = balance;
+      }
+
+      (function init() {
+        setInputValue();
+      })();
+    </script>
+  </body>
+</html>
