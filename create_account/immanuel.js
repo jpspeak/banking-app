@@ -1,39 +1,38 @@
-var user_account = JSON.parse(localStorage.getItem('user_accounts'));
+let user_account = JSON.parse(localStorage.getItem('user_accounts'));
 
 function new_user(user, balance){
 
-    var user = user.toUpperCase()
+     user = user.toUpperCase()
+
+     balance = parseFloat(balance);
 
     let obj = {name:user, balance:balance}; 
 
     for (var i = 0; i < user_account.length ; i++){
 
         var user_arr = user_account[i];
-      
+      console.log(user_arr);
     }
 
     if( user_account[0].name == user){  
    
-        // console.log("the user your enter it's already registered " + user);
-        document.getElementById("msg").innerHTML = "<b><p style = 'color:red'>THE USER YOU ENTER IS ALREADY REGISTERED </p><b>";    
+   
+        alert("<p style='color:red'>THE USER YOU ENTER IS ALREADY REGISTERED</p>");   
    
     }else if(user_account[1].name == user){
 
-        // return "<b><p style = 'color:red'>THE USER YOU ENTER IS ALREADY REGISTERED </p><b>";
-        document.getElementById("msg").innerHTML = "<b><p style = 'color:red'>THE USER YOU ENTER IS ALREADY REGISTERED </p><b>"; 
+        alert("THE USER YOU ENTER IS ALREADY REGISTERED"); 
 
     }else if(user_arr.name == user){
 
-        document.getElementById("msg").innerHTML = "<b><p style = 'color:red'>THE USER YOU ENTER IS ALREADY REGISTERED </p><b>"; 
+        alert("THE USER YOU ENTER IS ALREADY REGISTERED"); 
 
     }else{
-        // add to it,
-        user_account.push(obj);
-        // then put it back.
-        localStorage.setItem('user_accounts', JSON.stringify(user_account));
 
-    
-        // console.log("Successfully added new user " + user);
+        
+        user_account.push(obj);
+        
+        localStorage.setItem('user_accounts', JSON.stringify(user_account));
 
          document.getElementById("msg").innerHTML = "USERNAME: " + user.toUpperCase() + "<br />" + "BALANCE: "+ balance + ".00 PESOS<br />"+"<p>SUCCESSFULLY CREATED</p>"
    
@@ -108,9 +107,9 @@ function DOMcreateuser(){
         const Usersaving =  saving.value;
 
 
-        if (Username.length > 25) {
+        if (Username.length > 10) {
             
-            alert("The name may have no more than 25 characters");
+            alert("The name may have no more than 10 characters");
         
             submitOK = "false";
 
@@ -121,7 +120,8 @@ function DOMcreateuser(){
 
             submitOK = "false";
 
-        }else {
+
+        }else{
         
             new_user(Username, Usersaving)
             
