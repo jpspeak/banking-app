@@ -127,6 +127,8 @@ export function create_user(user, balance) {
   user = user.toUpperCase();
   balance = balance === "" ? 0 : parseFloat(balance);
   if (user === "") return new Response(false, "Full Name is required");
+  if (!user.match(/^[A-Za-z]+$/))
+    return new Response(false, "Full Name should only contain letters");
   if (isNaN(balance) || balance < 0)
     return new Response(false, "Invalid amount");
 
@@ -151,6 +153,8 @@ export function edit_user(id, user, balance) {
   id = parseFloat(id);
   balance = balance === "" ? 0 : parseFloat(balance);
   if (user === "") return new Response(false, "Full Name is required");
+  if (!user.match(/^[A-Za-z]+$/))
+    return new Response(false, "Full Name should only contain letters");
   if (isNaN(balance) || balance < 0)
     return new Response(false, "Invalid amount");
 
