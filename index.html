@@ -108,6 +108,10 @@
   </body>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script type="module">
+    if (document.cookie.indexOf("adminuser=Valid") == -1) {
+      location.href = "/index_login.html";  
+    }
+
     import { list_users, search, delete_user } from "./backend.js";
 
     const table_body_element = document.getElementById("table_body");
@@ -214,6 +218,8 @@
       }).then((result) => {
         if (result.isConfirmed) {
           window.location.assign("index_login.html")
+          document.cookie="adminuser=Valid"+";max-age=0";  
+          cookie1=document.cookie; 
         }
       })
     });

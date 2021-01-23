@@ -13,7 +13,7 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form action="#" class="login100-form">
+				<div class="login100-form">
 					<span class="login100-form-title p-b-34">
 						Admin Login
 					</span>
@@ -36,7 +36,7 @@
 					<div class="w-full text-center p-t-27 p-b-239">
 						
 					</div>
-				</form>
+				</div>
 				<div class="login100-more" style="background-image: url('images/bg-01.jpg');"></div>
 			</div>
 		</div>
@@ -46,6 +46,15 @@
 
 		document.getElementById('logs').addEventListener('click', function(){
 
+			let sessionTimeout = 1; //hours
+			
+			let loginDuration = new Date();
+			
+			loginDuration.setTime(loginDuration.getTime()+(sessionTimeout*30*30*1000));
+ 
+			document.cookie = "adminuser=Valid; "+loginDuration.toGMTString()+"; path=/";
+			
+			cookie1 =  document.cookie;
 
 				let userRef = "admin";
 		
