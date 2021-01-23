@@ -25,9 +25,11 @@
         font-family: "Montserrat", sans-serif;
         background-color: #e3f2fd;
       }
+
       .card {
         max-width: 400px;
-        min-width: 400px;
+        width: 100%;
+        /* min-width: 400px; */
       }
       .card-header {
         background: linear-gradient(90deg, #3c72ff 0%, #37cfff 100%);
@@ -53,12 +55,10 @@
         <a class="btn rounded-circle btn-outline-primary" href="/"
           ><i class="fas fa-arrow-left"></i
         ></a>
-        <div class="col-md-12">
-          <a class="btn btn-primary text-white float-right" id="sign-out">
-            <i class="fas fa-sign-out-alt"></i>
-            Sign-out
-          </a>
-        </div>
+        <button class="btn btn-outline-primary float-right" id="sign-out">
+          <i class="fas fa-sign-out-alt"></i>
+          Sign out
+        </button>
       </div>
     </nav>
     <div
