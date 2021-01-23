@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Admin Login</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form action="#" class="login100-form">
+					<span class="login100-form-title p-b-34">
+						Admin Login
+					</span>
+					
+					<div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Type user name">
+						<input id="username" class="input100" type="text" placeholder="User name">
+						<span class="focus-input100"></span>
+					</div>
+					<div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Type password">
+						<input class="input100" type="password"  placeholder="Password" id="password">
+						<span class="focus-input100"></span>
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<button id="logs" class="login100-form-btn" >
+							Sign in
+						</button>
+					</div>
+
+					<div class="w-full text-center p-t-27 p-b-239">
+						
+					</div>
+				</form>
+				<div class="login100-more" style="background-image: url('images/bg-01.jpg');"></div>
+			</div>
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script>
+
+		document.getElementById('logs').addEventListener('click', function(){
+
+
+				let userRef = "admin";
+		
+				let passRef = "admin123#";
+			
+				let user =  document.getElementById("username").value;
+		
+				let pass = document.getElementById("password").value;
+		
+				if (user == userRef || pass == passRef) {
+		
+					let timerInterval
+				
+					Swal.fire({
+				
+						title: 'Signinig in . . .',
+				
+						html: ' <b></b> milliseconds.',
+				
+						timer: 1000,
+				
+						timerProgressBar: true,
+				
+						didOpen: () => {
+				
+							Swal.showLoading()
+				
+							timerInterval = setInterval(() => {
+				
+								const content = Swal.getContent()
+				
+								if (content) {
+				
+									const b = content.querySelector('b')
+				
+									if (b) {
+				
+										b.textContent = Swal.getTimerLeft()
+				
+									}
+				
+								}
+				
+							}, 100)		
+				
+						},
+						
+						willClose: () => {
+
+							window.location.assign("index.html")
+				
+							clearInterval(timerInterval)
+				
+						}
+				
+					})
+				} else {
+	
+					Swal.fire({
+		
+						icon: 'error',
+		
+						title: 'Oops...',
+		
+						text: 'Wrong Username and Password!',
+					})
+		
+				}
+		
+			})
+	</script>
+</body>
+</html>

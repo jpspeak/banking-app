@@ -14,13 +14,26 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
     />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
+      rel="stylesheet"
+    />
     <style>
       body {
         min-height: 100vh;
-        font-family: "Roboto", sans-serif;
+        font-family: "Montserrat", sans-serif;
+        background-color: #e3f2fd;
+      }
+      .container {
+        min-width: 576px;
       }
       .card {
-        max-width: 900px;
+        max-width: 992px;
+      }
+      .card-header {
+        background: linear-gradient(90deg, #3c72ff 0%, #37cfff 100%);
+        color: white;
       }
       .nav-link {
         cursor: pointer;
@@ -37,18 +50,27 @@
     </style>
   </head>
   <body>
-    <nav
-      class="navbar navbar-expand-lg navbar-light bg-light justify-content-between"
-    >
+    <nav class="navbar navbar-expand-lg justify-content-between">
       <div class="container">
-        <a class="btn" href="/"><i class="fas fa-arrow-left"></i></a>
+        <a class="btn rounded-circle btn-outline-primary" href="/"
+          ><i class="fas fa-arrow-left"></i
+        ></a>
+        <div class="col-md-12">
+          <a
+            class="btn btn-primary text-white float-right" id="sign-out">
+            <i class="fas fa-sign-out-alt"></i>
+            Sign-out
+          </a>
+        </div>
       </div>
     </nav>
     <div
       class="container d-flex justify-content-center align-items-center flex-column mb-5"
     >
-      <h2 class="text-center m-5">User Bank Account</h2>
-      <div class="card w-100 shadow border-0">
+      <div class="card w-100 shadow border-0 mt-5">
+        <div class="card-header">
+          <h4 class="text-center m-0">User Bank Account</h4>
+        </div>
         <div class="card-body">
           <div class="row rounded">
             <div class="col-md-6">
@@ -85,16 +107,23 @@
                         <label for="deposit_amount"
                           ><strong>Amount</strong>
                         </label>
-                        <input
-                          type="number"
-                          id="deposit_amount"
-                          class="form-control"
-                          placeholder="Enter amount"
-                        />
+                        <div
+                          class="position-relative d-flex align-items-center"
+                        >
+                          <i
+                            class="fas fa-money-bill position-absolute mx-3 text-secondary"
+                          ></i>
+                          <input
+                            type="number"
+                            id="deposit_amount"
+                            class="form-control pl-5"
+                            placeholder="Enter amount"
+                          />
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-6 d-flex align-items-center">
-                      <button class="btn btn-dark w-100 mt-3">
+                      <button class="btn btn-primary w-100 mt-3" id="deposit">
                         <i class="fas fa-sign-in-alt mr-2 rotate-90"></i>
                         Deposit
                       </button>
@@ -110,16 +139,23 @@
                         <label for="withdraw_amount"
                           ><strong>Amount</strong>
                         </label>
-                        <input
-                          type="number"
-                          id="withdraw_amount"
-                          class="form-control"
-                          placeholder="Enter amount"
-                        />
+                        <div
+                          class="position-relative d-flex align-items-center"
+                        >
+                          <i
+                            class="fas fa-money-bill position-absolute mx-3 text-secondary"
+                          ></i>
+                          <input
+                            type="number"
+                            id="withdraw_amount"
+                            class="form-control pl-5"
+                            placeholder="Enter amount"
+                          />
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-6 d-flex align-items-center">
-                      <button class="btn btn-dark w-100 mt-3">
+                      <button class="btn btn-primary w-100 mt-3" id="withdraw">
                         <i class="fas fa-sign-out-alt mr-2 rotate-neg90"></i>
                         Withdraw
                       </button>
@@ -132,20 +168,27 @@
                   <div class="row">
                     <div class="col-md-4 d-flex align-items-center">
                       <div class="form-group">
-                        <label for="withdraw_amount"
+                        <label for="send_amount"
                           ><strong>Amount</strong>
                         </label>
-                        <input
-                          type="number"
-                          id="send_amount"
-                          class="form-control"
-                          placeholder="Enter amount"
-                        />
+                        <div
+                          class="position-relative d-flex align-items-center"
+                        >
+                          <i
+                            class="fas fa-money-bill position-absolute mx-3 text-secondary"
+                          ></i>
+                          <input
+                            type="number"
+                            id="send_amount"
+                            class="form-control pl-5"
+                            placeholder="Enter amount"
+                          />
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-4 d-flex align-items-center">
                       <div class="form-group">
-                        <label for="deposit_amount"
+                        <label for="recepient"
                           ><strong>Recepient</strong>
                         </label>
                         <select class="form-control w-100" id="recepient">
@@ -156,7 +199,7 @@
                       </div>
                     </div>
                     <div class="col-md-4 d-flex align-items-center">
-                      <button class="btn btn-dark w-100 mt-3" id="send">
+                      <button class="btn btn-primary w-100 mt-3" id="send">
                         <i class="fas fa-paper-plane mr-2"></i>
                         Send
                       </button>
@@ -172,7 +215,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script type="module">
-      import { show, send, list_users } from "./backend.js";
+      import { show, deposit, withdraw, send, list_users } from "./backend.js";
 
       const nav_link_element = document.querySelectorAll(".nav-link");
       const tab_pane_element = document.querySelectorAll(".tab-pane");
@@ -180,6 +223,12 @@
       const balance_display_element = document.getElementById(
         "balance_display"
       );
+      const deposit_amount_element = document.getElementById("deposit_amount");
+
+      const withdraw_amount_element = document.getElementById(
+        "withdraw_amount"
+      );
+
       const send_amount_element = document.getElementById("send_amount");
       const recepient_element = document.getElementById("recepient");
 
@@ -205,7 +254,13 @@
           nav_link.classList.add("active");
         });
       }
-      //clisk listener for send
+      //click listener
+      document
+        .getElementById("deposit")
+        .addEventListener("click", deposit_money);
+      document
+        .getElementById("withdraw")
+        .addEventListener("click", withdraw_money);
       document.getElementById("send").addEventListener("click", send_money);
 
       function display_user_account() {
@@ -233,7 +288,10 @@
       }
 
       function clear_inputs() {
-        (send_amount_element.value = ""), (recepient_element.value = "");
+        deposit_amount_element.value = "";
+        withdraw_amount_element.value = "";
+        send_amount_element.value = "";
+        recepient_element.value = "";
       }
 
       function send_money() {
@@ -254,7 +312,7 @@
                 <div class="col-md-6 d-flex"><strong>${data.to.name}</strong></div>
                 <div class="col-md-6"><strong><span class='text-secondary'>Balance:</span> ${data.to.balance}</strong></div>
             </div>
-            
+
             `,
             icon: "success",
           });
@@ -268,8 +326,78 @@
         clear_inputs();
       }
 
-      display_user_account();
-      show_select_option_names();
+      function deposit_money() {
+        const { success, message, data } = deposit(
+          name,
+          deposit_amount_element.value
+        );
+        if (success) {
+          Swal.fire({
+            title: message,
+            html: `
+            <div class="row pb-1 pt-4">
+                <div class="col-md-6 d-flex"><strong>${data.name}</strong></div>
+                <div class="col-md-6"><strong><span class='text-secondary'>Balance:</span> ${data.balance}</strong></div>
+            </div>
+            `,
+            icon: "success",
+          });
+        } else {
+          Swal.fire({
+            title: message,
+            icon: "error",
+          });
+        }
+        display_user_account();
+        clear_inputs();
+      }
+
+      function withdraw_money() {
+        const { success, message, data } = withdraw(
+          name,
+          withdraw_amount_element.value
+        );
+        if (success) {
+          Swal.fire({
+            title: message,
+            html: `
+            <div class="row pb-1 pt-4">
+                <div class="col-md-6 d-flex"><strong>${data.name}</strong></div>
+                <div class="col-md-6"><strong><span class='text-secondary'>Balance:</span> ${data.balance}</strong></div>
+            </div>
+            `,
+            icon: "success",
+          });
+        } else {
+          Swal.fire({
+            title: message,
+            icon: "error",
+          });
+        }
+        display_user_account();
+        clear_inputs();
+      }
+      (function init() {
+        display_user_account();
+        show_select_option_names();
+      })();
+
+      document.getElementById('sign-out').addEventListener('click', function(){
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to Sign-out?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.assign("index_login.html")
+        }
+      })
+      });
     </script>
   </body>
 </html>
