@@ -33,7 +33,7 @@
 						</button>
 					</div>
 
-					<div class="w-full text-center p-t-27 p-b-200">
+					<div class="w-full text-center p-t-27 p-b-150">
 						
 					</div>
 				</div>
@@ -50,7 +50,7 @@
 			
 			let loginDuration = new Date();
 			
-			loginDuration.setTime(loginDuration.getTime()+(sessionTimeout*30*30*1000));
+			loginDuration.setTime(loginDuration.getTime()+(sessionTimeout*1*1*1000));
  
 			document.cookie = "adminuser=Valid; "+loginDuration.toGMTString()+"; path=/";
 			
@@ -72,9 +72,7 @@
 				
 						title: 'Signinig in . . .',
 				
-						html: ' <b></b> milliseconds.',
-				
-						timer: 1000,
+						timer: 2000,
 				
 						timerProgressBar: true,
 				
