@@ -7,6 +7,26 @@
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link
+	rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+  />
+  <style>
+	  #lock{
+		width: 35px;
+		height: 35px;
+		background: #c80000; 
+		-moz-border-radius: 70px; 
+		-webkit-border-radius: 70px; 
+		border-radius: 70px;
+		color: white;
+		margin: auto;
+		padding-top: 5px;
+		padding-left: 2px;
+		margin-bottom: 10px;
+		text-align: center;
+	  }
+  </style>
 </head>
 <body>
 	
@@ -15,7 +35,11 @@
 			<div class="wrap-login100">
 				<div class="login100-form">
 					<span class="login100-form-title p-b-34">
-						Admin Login
+						<div id="lock">
+							<i class="fas fa-lock"></i>
+						</div>
+						<i class="fas fa-sign-in-alt"></i>
+						Sign in
 					</span>
 					
 					<div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Type user name">
