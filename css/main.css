@@ -240,7 +240,7 @@ iframe {
   display: flex;
   flex-wrap: wrap;
   /* -ms-flex-item-align: center; */
-  padding: 303px 65px 40px 65px;
+  padding: 250px 65px 100px 65px;
   align-items: center;
 }
 
