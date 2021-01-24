@@ -239,7 +239,9 @@ iframe {
   display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
+  /* -ms-flex-item-align: center; */
   padding: 303px 65px 40px 65px;
+  align-items: center;
 }
 
 .login100-form-title {
@@ -356,10 +358,12 @@ input.input100 {
   width: 100%;
   height: 50px;
   border-radius: 3px;
-  background: #00ad5f;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
 
   font-family: Montserrat-Bold;
-  font-size: 12px;
+  font-size: 1.2rem;
   color: #fff;
   line-height: 1.2;
   text-transform: uppercase;
