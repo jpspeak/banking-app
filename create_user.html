@@ -48,6 +48,11 @@
         transform: rotate(-90deg);
       }
     </style>
+    <script>
+      if (document.cookie.indexOf("admin_user=true") == -1) {
+        location.href = "/banking-app/admin_login.html";
+      }
+    </script>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg justify-content-between">
@@ -110,11 +115,6 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script type="module">
-      if (document.cookie.indexOf("adminuser=Valid") == -1) {
-        // location.href = "/index_login.html";
-        location.href = "/banking-app/index_login.html";
-      }
-
       import { create_user } from "./backend.js";
 
       const full_name_element = document.getElementById("full_name");
@@ -156,10 +156,9 @@
             confirmButtonText: "Yes!",
           }).then((result) => {
             if (result.isConfirmed) {
-              // window.location.assign("index_login.html");
-              window.location.replace("/banking-app/index_login.html");
-              document.cookie = "adminuser=Valid" + ";max-age=0";
-              cookie1 = document.cookie;
+              document.cookie =
+                "adminuser=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+              window.location.replace("/banking-app/admin_login.html");
             }
           });
         });
