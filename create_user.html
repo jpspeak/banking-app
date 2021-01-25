@@ -147,7 +147,7 @@
         .addEventListener("click", function () {
           Swal.fire({
             title: "Are you sure?",
-            text: "You want to Sign-out?",
+            text: "You want to sign out?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -155,7 +155,8 @@
             confirmButtonText: "Yes!",
           }).then((result) => {
             if (result.isConfirmed) {
-              window.location.assign("index_login.html");
+              // window.location.assign("index_login.html");
+              window.location.replace("/banking-app/index_login.html");
               document.cookie = "adminuser=Valid" + ";max-age=0";
               cookie1 = document.cookie;
             }
