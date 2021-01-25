@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Admin Login</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="css/util.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Montserrat", sans-serif !important;
+      }
+      .container {
+        height: 100vh !important;
+      }
+      .card {
+        max-width: 400px;
+        width: 100%;
+      }
+      .lock {
+        height: 40px;
+        width: 40px;
+        background-color: #dc004e;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="container h-100 d-flex justify-content-center align-items-center"
+    >
+      <div class="card shadow-lg p-3">
+        <div class="card-body">
+          <div class="d-flex align-items-center pb-5 flex-column">
+            <img src="images/bank_logo.png" width="75" height="75" alt="" />
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              placeholder="Enter username"
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Enter password"
+            />
+          </div>
+
+          <button class="btn btn-primary mt-4 w-100" id="logs">
+            <i class="fas fa-sign-in-alt mr-2"></i>Sign In
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+      document.getElementById("logs").addEventListener("click", function () {
+        let sessionTimeout = 1; //hours
+
+        let loginDuration = new Date();
+
+        loginDuration.setTime(
+          loginDuration.getTime() + sessionTimeout * 1 * 1 * 1000
+        );
+
+        document.cookie =
+          "adminuser=Valid; " + loginDuration.toGMTString() + "; path=/";
+
+        cookie1 = document.cookie;
+
+        let userRef = "admin";
+
+        let passRef = "admin123#";
+
+        let user = document.getElementById("username").value;
+
+        let pass = document.getElementById("password").value;
+
+        if (user == userRef && pass == passRef) {
+          let timerInterval;
+
+          Swal.fire({
+            title: "Signinig in . . .",
+
+            timer: 2000,
+
+            timerProgressBar: true,
+
+            didOpen: () => {
+              Swal.showLoading();
+
+              timerInterval = setInterval(() => {
+                const content = Swal.getContent();
+
+                if (content) {
+                  const b = content.querySelector("b");
+
+                  if (b) {
+                    b.textContent = Swal.getTimerLeft();
+                  }
+                }
+              }, 100);
+            },
+
+            willClose: () => {
+              window.location.assign("index.html");
+
+              clearInterval(timerInterval);
+            },
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+
+            title: "Oops...",
+
+            text: "The username or password is incorrect",
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
