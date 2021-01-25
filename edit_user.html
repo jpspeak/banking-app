@@ -50,7 +50,7 @@
   <body>
     <nav class="navbar navbar-expand-lg justify-content-between">
       <div class="container">
-        <a class="btn rounded-circle btn-outline-primary" href="/"
+        <a class="btn rounded-circle btn-outline-primary" href="/banking-app"
           ><i class="fas fa-arrow-left"></i
         ></a>
         <button class="btn btn-outline-primary float-right" id="sign-out">
@@ -139,7 +139,7 @@
             title: message,
             icon: "success",
           });
-          window.location.replace("/");
+          window.location.replace("/banking-app");
           sessionStorage.setItem("success", message);
         } else {
           Swal.fire({
