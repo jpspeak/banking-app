@@ -129,10 +129,10 @@
           balance_element.value
         );
         if (success) {
-          Swal.fire({
-            title: message,
-            icon: "success",
-          });
+          // Swal.fire({
+          //   title: message,
+          //   icon: "success",
+          // });
           window.location.replace("/banking-app");
           sessionStorage.setItem("success", message);
         } else {
