@@ -55,7 +55,7 @@ export function send(from_user, to_user, amount) {
       },
     });
   } else {
-    return new Response(false, "Not enough balance");
+    return new Response(false, "Insufficient  balance");
   }
 }
 
@@ -206,7 +206,7 @@ export function withdraw(user, amount) {
 
   if (user_index === -1) return new Response(false, "Account not found");
   if (user_accounts[user_index].balance < amount)
-    return new Response(false, "Not enough balance");
+    return new Response(false, "Insufficient  balance");
 
   user_accounts[user_index].balance -= amount;
 
